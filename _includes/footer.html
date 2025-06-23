@@ -1,0 +1,100 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <!-- Company Info -->
+      <div class="footer-section">
+        <h3>A-Fields Store</h3>
+        <p>Premium products for modern living. Quality, style, and innovation in every item we offer.</p>
+        <div class="social-links">
+          <a href="https://twitter.com/{{ site.social.twitter }}" target="_blank" rel="noopener">Twitter</a>
+          <a href="https://facebook.com/{{ site.social.facebook }}" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://instagram.com/{{ site.social.instagram }}" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/products">Products</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Categories -->
+      <div class="footer-section">
+        <h4>Categories</h4>
+        <ul class="footer-links">
+          <li><a href="/category/home-living">Home & Living</a></li>
+          <li><a href="/category/technology">Technology</a></li>
+          <li><a href="/category/fashion">Fashion</a></li>
+          <li><a href="/category/wellness">Wellness</a></li>
+        </ul>
+      </div>
+
+      <!-- Customer Service -->
+      <div class="footer-section">
+        <h4>Customer Service</h4>
+        <ul class="footer-links">
+          <li><a href="/shipping">Shipping Info</a></li>
+          <li><a href="/returns">Returns & Exchanges</a></li>
+          <li><a href="/faq">FAQ</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <div class="contact-info">
+          <p>📧 {{ site.email }}</p>
+          <p>📞 1-800-AFIELDS</p>
+          <p>📍 123 Store Street, City, State 12345</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="footer-newsletter">
+      <div class="newsletter-content">
+        <h4>Stay Updated</h4>
+        <p>Get the latest products and exclusive offers delivered to your inbox.</p>
+        <form class="newsletter-form" id="footer-newsletter-form">
+          <input type="email" placeholder="Enter your email" required>
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-content">
+        <p>&copy; {{ 'now' | date: "%Y" }} A-Fields Store. All rights reserved.</p>
+        <div class="payment-methods">
+          <span>💳</span>
+          <span>🏦</span>
+          <span>📱</span>
+          <span>💳</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Footer newsletter form handling
+  const footerNewsletterForm = document.getElementById('footer-newsletter-form');
+  if (footerNewsletterForm) {
+    footerNewsletterForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = this.querySelector('input[type="email"]').value;
+      alert('Thank you for subscribing! We\'ll keep you updated with our latest products.');
+      this.reset();
+    });
+  }
+});
+</script> 

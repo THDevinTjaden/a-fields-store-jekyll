@@ -1,0 +1,52 @@
+# Site settings
+title: "A-Fields Store"
+description: "Premium products for modern living"
+email: "hello@a-fields-store.com"
+baseurl: "/a-fields-store-jekyll" # the subpath of your site, e.g. /blog
+url: "https://yourusername.github.io" # the base hostname & protocol for your site
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Collections
+collections:
+  products:
+    output: true
+    permalink: /products/:title/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "products"
+    values:
+      layout: "product"
+
+# Plugins (GitHub Pages compatible)
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Social media
+social:
+  twitter: "@afieldsstore"
+  facebook: "a-fields-store"
+  instagram: "a-fields-store"
+
+# Store settings
+store:
+  currency: "$"
+  shipping: 5.99
+  free_shipping_threshold: 50 

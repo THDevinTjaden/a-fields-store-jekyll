@@ -1,0 +1,485 @@
+---
+layout: default
+title: "Contact Us - A-Fields Store"
+description: "Get in touch with A-Fields Store. We're here to help with any questions about our products or services."
+---
+
+<main class="contact-page">
+  <div class="container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1>Contact Us</h1>
+      <p>We'd love to hear from you. Get in touch with us for any questions or support.</p>
+    </div>
+
+    <!-- Contact Content -->
+    <div class="contact-content">
+      <!-- Contact Form -->
+      <div class="contact-form-section">
+        <h2>Send us a Message</h2>
+        <form class="contact-form" id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="first-name">First Name *</label>
+              <input type="text" id="first-name" name="first-name" required>
+            </div>
+            <div class="form-group">
+              <label for="last-name">Last Name *</label>
+              <input type="text" id="last-name" name="last-name" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+          
+          <div class="form-group">
+            <label for="subject">Subject *</label>
+            <select id="subject" name="subject" required>
+              <option value="">Select a subject</option>
+              <option value="general">General Inquiry</option>
+              <option value="product">Product Question</option>
+              <option value="order">Order Status</option>
+              <option value="return">Returns & Exchanges</option>
+              <option value="support">Technical Support</option>
+              <option value="feedback">Feedback</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" rows="6" required placeholder="Tell us how we can help you..."></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="newsletter" id="newsletter">
+              <span class="checkmark"></span>
+              Subscribe to our newsletter for updates and exclusive offers
+            </label>
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-large">Send Message</button>
+        </form>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="contact-info-section">
+        <h2>Get in Touch</h2>
+        
+        <div class="contact-methods">
+          <div class="contact-method">
+            <div class="method-icon">📧</div>
+            <div class="method-content">
+              <h3>Email</h3>
+              <p>{{ site.email }}</p>
+              <p class="method-note">We typically respond within 24 hours</p>
+            </div>
+          </div>
+          
+          <div class="contact-method">
+            <div class="method-icon">📞</div>
+            <div class="method-content">
+              <h3>Phone</h3>
+              <p>1-800-AFIELDS</p>
+              <p class="method-note">Monday - Friday, 9AM - 6PM EST</p>
+            </div>
+          </div>
+          
+          <div class="contact-method">
+            <div class="method-icon">💬</div>
+            <div class="method-content">
+              <h3>Live Chat</h3>
+              <p>Available on our website</p>
+              <p class="method-note">Chat with us in real-time</p>
+            </div>
+          </div>
+          
+          <div class="contact-method">
+            <div class="method-icon">📍</div>
+            <div class="method-content">
+              <h3>Address</h3>
+              <p>123 Store Street<br>City, State 12345<br>United States</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business Hours -->
+        <div class="business-hours">
+          <h3>Business Hours</h3>
+          <div class="hours-grid">
+            <div class="hours-row">
+              <span>Monday - Friday</span>
+              <span>9:00 AM - 6:00 PM EST</span>
+            </div>
+            <div class="hours-row">
+              <span>Saturday</span>
+              <span>10:00 AM - 4:00 PM EST</span>
+            </div>
+            <div class="hours-row">
+              <span>Sunday</span>
+              <span>Closed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Media -->
+        <div class="social-links">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+            <a href="https://twitter.com/{{ site.social.twitter }}" target="_blank" rel="noopener" class="social-icon">
+              <span>Twitter</span>
+            </a>
+            <a href="https://facebook.com/{{ site.social.facebook }}" target="_blank" rel="noopener" class="social-icon">
+              <span>Facebook</span>
+            </a>
+            <a href="https://instagram.com/{{ site.social.instagram }}" target="_blank" rel="noopener" class="social-icon">
+              <span>Instagram</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3>How do I track my order?</h3>
+          <p>You can track your order by logging into your account or using the tracking number provided in your order confirmation email.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>What is your return policy?</h3>
+          <p>We offer a 30-day return policy for most items. Products must be in original condition with all packaging included.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>Do you ship internationally?</h3>
+          <p>Currently, we ship to the United States and Canada. We're working on expanding our shipping options.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>How can I change or cancel my order?</h3>
+          <p>Orders can be modified or cancelled within 2 hours of placement. Contact our customer service team for assistance.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const contactForm = document.getElementById('contact-form');
+  
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData);
+      
+      // Show success message
+      showNotification('Thank you for your message! We\'ll get back to you soon.', 'success');
+      
+      // Reset form
+      this.reset();
+    });
+  }
+});
+
+function showNotification(message, type) {
+  if (window.utils && window.utils.showNotification) {
+    window.utils.showNotification(message, type);
+  } else {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 3000);
+  }
+}
+</script>
+
+<style>
+.contact-page {
+  padding: var(--spacing-8) 0;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: var(--spacing-12);
+}
+
+.page-header h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-4);
+  color: var(--gray-900);
+}
+
+.page-header p {
+  font-size: var(--font-size-lg);
+  color: var(--gray-600);
+}
+
+.contact-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--spacing-16);
+  margin-bottom: var(--spacing-16);
+}
+
+.contact-form-section h2,
+.contact-info-section h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  margin-bottom: var(--spacing-8);
+  color: var(--gray-900);
+}
+
+.contact-form {
+  background-color: var(--white);
+  padding: var(--spacing-8);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-4);
+}
+
+.form-group {
+  margin-bottom: var(--spacing-6);
+}
+
+.form-group label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--gray-700);
+  margin-bottom: var(--spacing-2);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: var(--spacing-3);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-base);
+  transition: border-color var(--transition-fast);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  color: var(--gray-600);
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: auto;
+  margin-top: 2px;
+}
+
+.contact-methods {
+  margin-bottom: var(--spacing-8);
+}
+
+.contact-method {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+  padding: var(--spacing-4);
+  background-color: var(--gray-50);
+  border-radius: var(--radius-lg);
+}
+
+.method-icon {
+  font-size: var(--font-size-2xl);
+  flex-shrink: 0;
+}
+
+.method-content h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin-bottom: var(--spacing-2);
+  color: var(--gray-900);
+}
+
+.method-content p {
+  color: var(--gray-600);
+  margin-bottom: var(--spacing-1);
+}
+
+.method-note {
+  font-size: var(--font-size-sm);
+  color: var(--gray-500);
+}
+
+.business-hours {
+  margin-bottom: var(--spacing-8);
+}
+
+.business-hours h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin-bottom: var(--spacing-4);
+  color: var(--gray-900);
+}
+
+.hours-grid {
+  background-color: var(--gray-50);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.hours-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-3) var(--spacing-4);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.hours-row:last-child {
+  border-bottom: none;
+}
+
+.hours-row span:first-child {
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+.hours-row span:last-child {
+  color: var(--gray-600);
+}
+
+.social-links h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin-bottom: var(--spacing-4);
+  color: var(--gray-900);
+}
+
+.social-icons {
+  display: flex;
+  gap: var(--spacing-3);
+}
+
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-3) var(--spacing-4);
+  background-color: var(--primary-color);
+  color: var(--white);
+  text-decoration: none;
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: background-color var(--transition-fast);
+}
+
+.social-icon:hover {
+  background-color: var(--primary-dark);
+}
+
+.faq-section {
+  padding: var(--spacing-16) 0;
+  background-color: var(--gray-50);
+  border-radius: var(--radius-xl);
+  margin-top: var(--spacing-16);
+}
+
+.faq-section h2 {
+  text-align: center;
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-12);
+  color: var(--gray-900);
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-8);
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-4);
+}
+
+.faq-item {
+  background-color: var(--white);
+  padding: var(--spacing-6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.faq-item h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin-bottom: var(--spacing-3);
+  color: var(--gray-900);
+}
+
+.faq-item p {
+  color: var(--gray-600);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-8);
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .page-header h1 {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-method {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .method-icon {
+    align-self: center;
+  }
+}
+</style> 

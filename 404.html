@@ -1,0 +1,144 @@
+---
+layout: default
+title: "Page Not Found - A-Fields Store"
+description: "The page you're looking for doesn't exist. Return to A-Fields Store to continue shopping."
+---
+
+<main class="error-page">
+  <div class="container">
+    <div class="error-content">
+      <div class="error-icon">🔍</div>
+      <h1>404</h1>
+      <h2>Page Not Found</h2>
+      <p>Sorry, the page you're looking for doesn't exist. It might have been moved, deleted, or you entered the wrong URL.</p>
+      
+      <div class="error-actions">
+        <a href="/" class="btn btn-primary">Go Home</a>
+        <a href="/products" class="btn btn-outline">Browse Products</a>
+      </div>
+      
+      <div class="error-help">
+        <h3>Need Help?</h3>
+        <p>Try these helpful links:</p>
+        <ul>
+          <li><a href="/products">All Products</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+          <li><a href="/faq">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+
+<style>
+.error-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-8) 0;
+  background-color: var(--gray-50);
+}
+
+.error-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.error-icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-6);
+}
+
+.error-content h1 {
+  font-size: 6rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-4);
+  line-height: 1;
+}
+
+.error-content h2 {
+  font-size: var(--font-size-3xl);
+  font-weight: 600;
+  margin-bottom: var(--spacing-4);
+  color: var(--gray-900);
+}
+
+.error-content p {
+  font-size: var(--font-size-lg);
+  color: var(--gray-600);
+  margin-bottom: var(--spacing-8);
+  line-height: 1.6;
+}
+
+.error-actions {
+  display: flex;
+  gap: var(--spacing-4);
+  justify-content: center;
+  margin-bottom: var(--spacing-12);
+  flex-wrap: wrap;
+}
+
+.error-help {
+  background-color: var(--white);
+  padding: var(--spacing-8);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.error-help h3 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  margin-bottom: var(--spacing-4);
+  color: var(--gray-900);
+}
+
+.error-help p {
+  font-size: var(--font-size-base);
+  color: var(--gray-600);
+  margin-bottom: var(--spacing-4);
+}
+
+.error-help ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: var(--spacing-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.error-help li a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.error-help li a:hover {
+  color: var(--primary-dark);
+}
+
+@media (max-width: 768px) {
+  .error-content h1 {
+    font-size: 4rem;
+  }
+  
+  .error-content h2 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .error-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .error-help ul {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+</style> 

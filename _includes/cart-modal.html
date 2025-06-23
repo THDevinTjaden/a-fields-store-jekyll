@@ -1,0 +1,39 @@
+<div class="cart-modal" id="cart-modal">
+  <div class="cart-overlay" onclick="toggleCart()"></div>
+  <div class="cart-content">
+    <div class="cart-header">
+      <h3>Shopping Cart</h3>
+      <button class="close-btn" onclick="toggleCart()">×</button>
+    </div>
+    
+    <div class="cart-items" id="cart-items">
+      <!-- Cart items will be dynamically populated -->
+    </div>
+    
+    <div class="cart-summary">
+      <div class="cart-totals">
+        <div class="subtotal">
+          <span>Subtotal:</span>
+          <span id="cart-subtotal">{{ site.store.currency }}0.00</span>
+        </div>
+        <div class="shipping">
+          <span>Shipping:</span>
+          <span id="cart-shipping">{{ site.store.currency }}0.00</span>
+        </div>
+        <div class="total">
+          <span>Total:</span>
+          <span id="cart-total">{{ site.store.currency }}0.00</span>
+        </div>
+      </div>
+      
+      <div class="cart-actions">
+        <button class="btn btn-secondary" onclick="clearCart()">Clear Cart</button>
+        <button class="btn btn-primary" onclick="proceedToCheckout()">Checkout</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Cart functionality will be implemented in cart.js
+</script> 

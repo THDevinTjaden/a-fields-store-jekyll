@@ -1,0 +1,495 @@
+---
+layout: default
+title: "All Products - A-Fields Store"
+description: "Browse our complete collection of premium products. Find the perfect items for your lifestyle."
+---
+
+<main class="products-page">
+  <div class="container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1>All Products</h1>
+      <p>Discover our curated collection of premium products</p>
+    </div>
+
+    <!-- Filters and Sorting -->
+    <div class="products-controls">
+      <div class="filters">
+        <div class="filter-group">
+          <label for="category-filter">Category:</label>
+          <select id="category-filter" onchange="filterProducts()">
+            <option value="">All Categories</option>
+            <option value="technology">Technology</option>
+            <option value="home-living">Home & Living</option>
+            <option value="fashion">Fashion</option>
+            <option value="wellness">Wellness</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="price-filter">Price Range:</label>
+          <select id="price-filter" onchange="filterProducts()">
+            <option value="">All Prices</option>
+            <option value="0-50">Under $50</option>
+            <option value="50-100">$50 - $100</option>
+            <option value="100-200">$100 - $200</option>
+            <option value="200+">Over $200</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label for="sort-by">Sort By:</label>
+          <select id="sort-by" onchange="sortProducts()">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Highest Rated</option>
+            <option value="newest">Newest</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="view-toggle">
+        <button class="view-btn active" data-view="grid" onclick="changeView('grid')">Grid</button>
+        <button class="view-btn" data-view="list" onclick="changeView('list')">List</button>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-container">
+      <div class="products-grid" id="products-grid">
+        {% for product in site.products %}
+          {% include product-card.html product=product %}
+        {% endfor %}
+      </div>
+      
+      <!-- No Results Message -->
+      <div class="no-results" id="no-results" style="display: none;">
+        <h3>No products found</h3>
+        <p>Try adjusting your filters or browse all products.</p>
+        <button class="btn btn-primary" onclick="clearFilters()">Clear Filters</button>
+      </div>
+    </div>
+
+    <!-- Load More Button -->
+    <div class="load-more-container" id="load-more-container" style="display: none;">
+      <button class="btn btn-secondary" onclick="loadMoreProducts()">Load More Products</button>
+    </div>
+  </div>
+</main>
+
+<script>
+let currentProducts = [];
+let displayedProducts = [];
+let currentView = 'grid';
+let productsPerPage = 12;
+let currentPage = 1;
+
+// Initialize products page
+document.addEventListener('DOMContentLoaded', function() {
+  loadAllProducts();
+  initializeFilters();
+});
+
+function loadAllProducts() {
+  // In a real implementation, this would fetch from the server
+  // For now, we'll simulate with the products we have
+  currentProducts = [
+    {
+      sku: 'SW001',
+      title: 'Premium Smart Watch Pro',
+      price: 299.99,
+      original_price: 399.99,
+      image: '/assets/images/products/smart-watch.jpg',
+      category: 'technology',
+      featured: true,
+      rating: 4.8,
+      reviews_count: 127,
+      url: '/products/smart-watch/'
+    },
+    {
+      sku: 'WH001',
+      title: 'Premium Wireless Headphones',
+      price: 199.99,
+      original_price: 249.99,
+      image: '/assets/images/products/wireless-headphones.jpg',
+      category: 'technology',
+      featured: true,
+      rating: 4.9,
+      reviews_count: 89,
+      url: '/products/wireless-headphones/'
+    }
+  ];
+  
+  displayedProducts = [...currentProducts];
+  displayProducts();
+}
+
+function displayProducts() {
+  const grid = document.getElementById('products-grid');
+  const noResults = document.getElementById('no-results');
+  
+  if (displayedProducts.length === 0) {
+    grid.style.display = 'none';
+    noResults.style.display = 'block';
+    return;
+  }
+  
+  grid.style.display = 'grid';
+  noResults.style.display = 'none';
+  
+  // Clear existing products
+  grid.innerHTML = '';
+  
+  // Display products
+  displayedProducts.forEach(product => {
+    const productCard = createProductCard(product);
+    grid.appendChild(productCard);
+  });
+}
+
+function createProductCard(product) {
+  const card = document.createElement('div');
+  card.className = 'product-card';
+  
+  const discount = product.original_price ? Math.round(((product.original_price - product.price) / product.original_price) * 100) : 0;
+  
+  card.innerHTML = `
+    <div class="product-image">
+      <a href="${product.url}">
+        <img src="${product.image}" alt="${product.title}" loading="lazy">
+      </a>
+      ${product.featured ? '<span class="featured-badge">Featured</span>' : ''}
+      ${product.original_price ? '<span class="sale-badge">Sale</span>' : ''}
+    </div>
+    
+    <div class="product-info">
+      <h3 class="product-title">
+        <a href="${product.url}">${product.title}</a>
+      </h3>
+      
+      <div class="product-price">
+        <span class="current-price">$${product.price.toFixed(2)}</span>
+        ${product.original_price ? `<span class="original-price">$${product.original_price.toFixed(2)}</span>` : ''}
+      </div>
+      
+      ${product.rating ? `
+        <div class="product-rating">
+          <div class="stars">
+            ${generateStars(product.rating)}
+          </div>
+          <span class="rating-count">(${product.reviews_count})</span>
+        </div>
+      ` : ''}
+      
+      <div class="product-actions">
+        <button class="btn btn-primary btn-small" onclick="addToCartFromCard('${product.sku}', '${product.title}', ${product.price}, '${product.image}')">
+          Add to Cart
+        </button>
+        <button class="btn btn-secondary btn-small" onclick="addToWishlistFromCard('${product.sku}')">
+          ❤️
+        </button>
+      </div>
+    </div>
+  `;
+  
+  return card;
+}
+
+function generateStars(rating) {
+  let stars = '';
+  for (let i = 1; i <= 5; i++) {
+    if (i <= rating) {
+      stars += '<span class="star filled">★</span>';
+    } else {
+      stars += '<span class="star">☆</span>';
+    }
+  }
+  return stars;
+}
+
+function filterProducts() {
+  const categoryFilter = document.getElementById('category-filter').value;
+  const priceFilter = document.getElementById('price-filter').value;
+  
+  displayedProducts = currentProducts.filter(product => {
+    // Category filter
+    if (categoryFilter && product.category !== categoryFilter) {
+      return false;
+    }
+    
+    // Price filter
+    if (priceFilter) {
+      const [min, max] = priceFilter.split('-').map(Number);
+      if (max) {
+        if (product.price < min || product.price > max) {
+          return false;
+        }
+      } else {
+        // 200+ case
+        if (product.price < min) {
+          return false;
+        }
+      }
+    }
+    
+    return true;
+  });
+  
+  currentPage = 1;
+  displayProducts();
+}
+
+function sortProducts() {
+  const sortBy = document.getElementById('sort-by').value;
+  
+  displayedProducts.sort((a, b) => {
+    switch (sortBy) {
+      case 'price-low':
+        return a.price - b.price;
+      case 'price-high':
+        return b.price - a.price;
+      case 'rating':
+        return (b.rating || 0) - (a.rating || 0);
+      case 'newest':
+        return new Date(b.date || 0) - new Date(a.date || 0);
+      case 'featured':
+      default:
+        return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
+    }
+  });
+  
+  displayProducts();
+}
+
+function changeView(view) {
+  currentView = view;
+  const grid = document.getElementById('products-grid');
+  const buttons = document.querySelectorAll('.view-btn');
+  
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  if (view === 'list') {
+    grid.classList.add('list-view');
+  } else {
+    grid.classList.remove('list-view');
+  }
+}
+
+function clearFilters() {
+  document.getElementById('category-filter').value = '';
+  document.getElementById('price-filter').value = '';
+  document.getElementById('sort-by').value = 'featured';
+  
+  displayedProducts = [...currentProducts];
+  displayProducts();
+}
+
+function initializeFilters() {
+  // Set initial filters based on URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const category = urlParams.get('category');
+  const price = urlParams.get('price');
+  const sort = urlParams.get('sort');
+  
+  if (category) {
+    document.getElementById('category-filter').value = category;
+  }
+  if (price) {
+    document.getElementById('price-filter').value = price;
+  }
+  if (sort) {
+    document.getElementById('sort-by').value = sort;
+  }
+  
+  if (category || price || sort) {
+    filterProducts();
+  }
+}
+
+// Cart functions (these would be handled by cart.js)
+function addToCartFromCard(sku, name, price, image) {
+  const product = {
+    id: sku,
+    name: name,
+    price: price,
+    image: image,
+    quantity: 1
+  };
+  
+  if (window.cart && window.cart.addItem) {
+    window.cart.addItem(product);
+  }
+  
+  showNotification('Product added to cart!', 'success');
+}
+
+function addToWishlistFromCard(sku) {
+  showNotification('Product added to wishlist!', 'success');
+}
+
+function showNotification(message, type) {
+  if (window.utils && window.utils.showNotification) {
+    window.utils.showNotification(message, type);
+  } else {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 3000);
+  }
+}
+</script>
+
+<style>
+.products-page {
+  padding: var(--spacing-8) 0;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: var(--spacing-12);
+}
+
+.page-header h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-4);
+  color: var(--gray-900);
+}
+
+.page-header p {
+  font-size: var(--font-size-lg);
+  color: var(--gray-600);
+}
+
+.products-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-8);
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+}
+
+.filters {
+  display: flex;
+  gap: var(--spacing-6);
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.filter-group label {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+.filter-group select {
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  background-color: var(--white);
+}
+
+.view-toggle {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.view-btn {
+  padding: var(--spacing-2) var(--spacing-4);
+  border: 1px solid var(--gray-300);
+  background-color: var(--white);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.view-btn.active {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-color: var(--primary-color);
+}
+
+.products-container {
+  margin-bottom: var(--spacing-12);
+}
+
+.no-results {
+  text-align: center;
+  padding: var(--spacing-16);
+}
+
+.no-results h3 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-4);
+  color: var(--gray-700);
+}
+
+.no-results p {
+  color: var(--gray-600);
+  margin-bottom: var(--spacing-6);
+}
+
+.load-more-container {
+  text-align: center;
+}
+
+/* List view styles */
+.products-grid.list-view {
+  grid-template-columns: 1fr;
+  gap: var(--spacing-6);
+}
+
+.products-grid.list-view .product-card {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  gap: var(--spacing-6);
+  align-items: center;
+}
+
+.products-grid.list-view .product-image {
+  aspect-ratio: 1;
+  max-width: 200px;
+}
+
+.products-grid.list-view .product-info {
+  padding: 0;
+}
+
+.products-grid.list-view .product-actions {
+  justify-self: end;
+}
+
+@media (max-width: 768px) {
+  .products-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filters {
+    flex-direction: column;
+  }
+  
+  .products-grid.list-view {
+    grid-template-columns: 1fr;
+  }
+  
+  .products-grid.list-view .product-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  .products-grid.list-view .product-actions {
+    justify-self: center;
+  }
+}
+</style> 

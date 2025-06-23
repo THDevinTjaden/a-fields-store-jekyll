@@ -1,0 +1,265 @@
+---
+layout: default
+---
+
+<main class="product-detail">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="/">Home</a>
+      <span>/</span>
+      <a href="/products">Products</a>
+      <span>/</span>
+      <span>{{ page.title }}</span>
+    </nav>
+
+    <div class="product-layout">
+      <div class="product-gallery">
+        <div class="main-image">
+          <img src="{{ page.image }}" alt="{{ page.title }}" id="main-product-image">
+        </div>
+        {% if page.gallery %}
+        <div class="thumbnail-gallery">
+          {% for image in page.gallery %}
+          <img src="{{ image }}" alt="{{ page.title }}" class="thumbnail" onclick="changeMainImage('{{ image }}')">
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="product-info">
+        <h1 class="product-title">{{ page.title }}</h1>
+        <div class="product-price">
+          <span class="current-price">{{ site.store.currency }}{{ page.price }}</span>
+          {% if page.original_price %}
+          <span class="original-price">{{ site.store.currency }}{{ page.original_price }}</span>
+          {% endif %}
+        </div>
+
+        {% if page.rating %}
+        <div class="product-rating">
+          <div class="stars">
+            {% for i in (1..5) %}
+              {% if i <= page.rating %}
+                <span class="star filled">★</span>
+              {% else %}
+                <span class="star">☆</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <span class="rating-text">({{ page.reviews_count | default: 0 }} reviews)</span>
+        </div>
+        {% endif %}
+
+        <div class="product-description">
+          {{ page.description }}
+        </div>
+
+        {% if page.features %}
+        <div class="product-features">
+          <h3>Key Features</h3>
+          <ul>
+            {% for feature in page.features %}
+            <li>{{ feature }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        <div class="product-options">
+          {% if page.variants %}
+          <div class="variant-selector">
+            <label for="variant-select">Select Option:</label>
+            <select id="variant-select" onchange="updatePrice()">
+              {% for variant in page.variants %}
+              <option value="{{ variant.price }}" data-sku="{{ variant.sku }}">{{ variant.name }} - {{ site.store.currency }}{{ variant.price }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          {% endif %}
+
+          <div class="quantity-selector">
+            <label for="quantity">Quantity:</label>
+            <div class="quantity-controls">
+              <button type="button" onclick="changeQuantity(-1)">-</button>
+              <input type="number" id="quantity" value="1" min="1" max="99">
+              <button type="button" onclick="changeQuantity(1)">+</button>
+            </div>
+          </div>
+
+          <div class="product-actions">
+            <button class="btn btn-primary btn-large" onclick="addToCart()">
+              <span class="cart-icon">🛒</span>
+              Add to Cart
+            </button>
+            <button class="btn btn-secondary btn-large" onclick="addToWishlist()">
+              <span class="heart-icon">❤️</span>
+              Add to Wishlist
+            </button>
+          </div>
+        </div>
+
+        <div class="product-meta">
+          <div class="meta-item">
+            <strong>SKU:</strong> <span id="product-sku">{{ page.sku | default: 'N/A' }}</span>
+          </div>
+          <div class="meta-item">
+            <strong>Availability:</strong> 
+            <span class="{% if page.in_stock %}in-stock{% else %}out-of-stock{% endif %}">
+              {% if page.in_stock %}In Stock{% else %}Out of Stock{% endif %}
+            </span>
+          </div>
+          {% if page.shipping_info %}
+          <div class="meta-item">
+            <strong>Shipping:</strong> {{ page.shipping_info }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Tabs -->
+    <div class="product-tabs">
+      <div class="tab-buttons">
+        <button class="tab-btn active" onclick="showTab('description')">Description</button>
+        <button class="tab-btn" onclick="showTab('specifications')">Specifications</button>
+        <button class="tab-btn" onclick="showTab('reviews')">Reviews</button>
+      </div>
+
+      <div class="tab-content">
+        <div id="description" class="tab-panel active">
+          {{ content }}
+        </div>
+        
+        <div id="specifications" class="tab-panel">
+          {% if page.specifications %}
+          <table class="specs-table">
+            {% for spec in page.specifications %}
+            <tr>
+              <td><strong>{{ spec.name }}</strong></td>
+              <td>{{ spec.value }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% else %}
+          <p>No specifications available.</p>
+          {% endif %}
+        </div>
+        
+        <div id="reviews" class="tab-panel">
+          <div class="reviews-section">
+            <h3>Customer Reviews</h3>
+            {% if page.reviews %}
+              {% for review in page.reviews %}
+              <div class="review">
+                <div class="review-header">
+                  <div class="stars">
+                    {% for i in (1..5) %}
+                      {% if i <= review.rating %}
+                        <span class="star filled">★</span>
+                      {% else %}
+                        <span class="star">☆</span>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  <span class="reviewer">{{ review.name }}</span>
+                  <span class="review-date">{{ review.date }}</span>
+                </div>
+                <p class="review-text">{{ review.comment }}</p>
+              </div>
+              {% endfor %}
+            {% else %}
+              <p>No reviews yet. Be the first to review this product!</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Products -->
+    {% if page.related_products %}
+    <section class="related-products">
+      <h2>Related Products</h2>
+      <div class="products-grid">
+        {% for related_id in page.related_products %}
+          {% assign related_product = site.products | where: "sku", related_id | first %}
+          {% if related_product %}
+            {% include product-card.html product=related_product %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+  </div>
+</main>
+
+<script>
+function changeMainImage(imageSrc) {
+  document.getElementById('main-product-image').src = imageSrc;
+}
+
+function changeQuantity(delta) {
+  const input = document.getElementById('quantity');
+  const newValue = Math.max(1, Math.min(99, parseInt(input.value) + delta));
+  input.value = newValue;
+}
+
+function updatePrice() {
+  const select = document.getElementById('variant-select');
+  const selectedOption = select.options[select.selectedIndex];
+  const price = selectedOption.value;
+  const sku = selectedOption.dataset.sku;
+  
+  document.querySelector('.current-price').textContent = '$' + price;
+  document.getElementById('product-sku').textContent = sku;
+}
+
+function addToCart() {
+  const product = {
+    id: '{{ page.sku | escape }}',
+    name: '{{ page.title | escape }}',
+    price: {{ page.price }},
+    image: '{{ page.image | escape }}',
+    quantity: parseInt(document.getElementById('quantity').value)
+  };
+  
+  // Add to cart logic (implemented in cart.js)
+  window.addToCart(product);
+  
+  // Show success message
+  showNotification('Product added to cart!', 'success');
+}
+
+function addToWishlist() {
+  showNotification('Product added to wishlist!', 'success');
+}
+
+function showTab(tabName) {
+  // Hide all tab panels
+  document.querySelectorAll('.tab-panel').forEach(panel => {
+    panel.classList.remove('active');
+  });
+  
+  // Remove active class from all tab buttons
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  // Show selected tab panel
+  document.getElementById(tabName).classList.add('active');
+  
+  // Add active class to clicked button
+  event.target.classList.add('active');
+}
+
+function showNotification(message, type) {
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.textContent = message;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
+}
+</script> 

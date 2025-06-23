@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://yourusername.github.io/a-fields-store-jekyll/sitemap.xml
+
+# Disallow admin areas (if any)
+Disallow: /admin/
+Disallow: /_admin/
+
+# Allow all other content
+Allow: /products/
+Allow: /category/
+Allow: /about/
+Allow: /contact/ 

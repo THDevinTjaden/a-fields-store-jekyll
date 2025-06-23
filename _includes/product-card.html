@@ -1,0 +1,81 @@
+<div class="product-card">
+  <div class="product-image">
+    <a href="{{ product.url }}">
+      <img src="{{ product.image }}" alt="{{ product.title }}" loading="lazy">
+    </a>
+    {% if product.featured %}
+    <span class="featured-badge">Featured</span>
+    {% endif %}
+    {% if product.original_price %}
+    <span class="sale-badge">Sale</span>
+    {% endif %}
+  </div>
+  
+  <div class="product-info">
+    <h3 class="product-title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+    
+    <div class="product-price">
+      <span class="current-price">{{ site.store.currency }}{{ product.price }}</span>
+      {% if product.original_price %}
+      <span class="original-price">{{ site.store.currency }}{{ product.original_price }}</span>
+      {% endif %}
+    </div>
+    
+    {% if product.rating %}
+    <div class="product-rating">
+      <div class="stars">
+        {% for i in (1..5) %}
+          {% if i <= product.rating %}
+            <span class="star filled">★</span>
+          {% else %}
+            <span class="star">☆</span>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <span class="rating-count">({{ product.reviews_count | default: 0 }})</span>
+    </div>
+    {% endif %}
+    
+    <div class="product-actions">
+      <button class="btn btn-primary btn-small" onclick="addToCartFromCard('{{ product.sku }}', '{{ product.title | escape }}', {{ product.price }}, '{{ product.image }}')">
+        Add to Cart
+      </button>
+      <button class="btn btn-secondary btn-small" onclick="addToWishlistFromCard('{{ product.sku }}')">
+        ❤️
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+function addToCartFromCard(sku, name, price, image) {
+  const product = {
+    id: sku,
+    name: name,
+    price: price,
+    image: image,
+    quantity: 1
+  };
+  
+  window.addToCart(product);
+  showNotification('Product added to cart!', 'success');
+}
+
+function addToWishlistFromCard(sku) {
+  showNotification('Product added to wishlist!', 'success');
+}
+
+function showNotification(message, type) {
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.textContent = message;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
+}
+</script> 
