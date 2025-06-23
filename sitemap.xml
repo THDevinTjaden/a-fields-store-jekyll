@@ -4,32 +4,32 @@ layout: null
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>{{ site.url }}{{ site.baseurl }}/</loc>
+    <loc>{{ site.url }}/</loc>
     <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>{{ site.url }}{{ site.baseurl }}/products/</loc>
+    <loc>{{ site.url }}/products/</loc>
     <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>{{ site.url }}{{ site.baseurl }}/about/</loc>
+    <loc>{{ site.url }}/about/</loc>
     <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>{{ site.url }}{{ site.baseurl }}/contact/</loc>
+    <loc>{{ site.url }}/contact/</loc>
     <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   {% for product in site.products %}
   <url>
-    <loc>{{ site.url }}{{ site.baseurl }}{{ product.url }}</loc>
+    <loc>{{ site.url }}{{ product.url }}</loc>
     <lastmod>{{ product.date | date_to_xmlschema }}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

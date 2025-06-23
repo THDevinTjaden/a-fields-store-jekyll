@@ -2,8 +2,7 @@
 title: "A-Fields Store"
 description: "Premium products for modern living"
 email: "hello@a-fields-store.com"
-baseurl: "/a-fields-store-jekyll" # the subpath of your site, e.g. /blog
-url: "https://yourusername.github.io" # the base hostname & protocol for your site
+url: "https://yourusername.github.io" # Update this with your actual GitHub username
 
 # Build settings
 markdown: kramdown
@@ -38,6 +37,7 @@ exclude:
   - vendor/cache/
   - vendor/gems/
   - vendor/ruby/
+  - .github/
 
 # Social media
 social:
